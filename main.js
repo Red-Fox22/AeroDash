@@ -40,7 +40,7 @@ const planeObj = new Plane(speed);
 const collisions = new Collisions(planeObj.plane, enemies.enemies, enemies.clouds);
 
 const updateMoney = () => {
-  for (const enemy of enemies.returnEnemies()) {
+  for (const enemy of enemies.enemies) {
     if (enemy.x < 0 + 150 && enemy.x > 0 + 150 - speed) {
       points += gain;
       money += gain;
@@ -51,7 +51,7 @@ const updateMoney = () => {
 }
 
 const lost = () => {
-  const plane = planeObj.returnPlane();
+  const plane = planeObj.plane;
   ctx.drawImage(explosion, plane.x + plane.width / 2, plane.y - plane.height / 2, 100, 100);
   document.querySelector('.lost').style.display = 'flex';
 }

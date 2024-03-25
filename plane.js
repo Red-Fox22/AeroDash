@@ -14,10 +14,6 @@ class Plane {
     };
   }
 
-  returnPlane() {
-    return this.plane;
-  }
-
   draw() {
     ctx.save();
     ctx.translate(this.plane.x + this.plane.width / 2, this.plane.y + this.plane.height / 2);
