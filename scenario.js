@@ -29,10 +29,6 @@ class Enemies {
     this.spawnRateCloud = 5000;
   }
 
-  returnEnemies() {
-    return this.enemies;
-  }
-
   spawnTower() {
     const height = Math.floor(Math.random() * (300 - 200)) + 200;
 

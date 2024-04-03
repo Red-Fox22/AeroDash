@@ -5,8 +5,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = document.documentElement.clientWidth;
 canvas.height = document.documentElement.clientHeight;
 
-const centerX_canvas = canvas.width / 2;
-const centerY_canvas = canvas.height / 2;
+const centerX_canvas = canvas.width * .5;
+const centerY_canvas = canvas.height * .5;
 
 const backgroundImage = new Image();
 backgroundImage.src = "./assets/background.webp";
@@ -21,7 +21,7 @@ const planeImage = new Image();
 planeImage.src = localStorage.getItem("plane") || "./assets/ap-1.webp";
 
 const planeLevel = planeImage.src.split("-")[1].split(".")[0];
-const speed = 10 * (1 + planeLevel / 4);
+const speed = 10 * (1 + planeLevel * .25);
 
 const gain = 500;
 let points = 0;
@@ -42,20 +42,25 @@ const planeObj = new Plane(speed);
 const collisions = new Collisions(planeObj.plane, enemies.enemies, enemies.clouds);
 
 const updateMoney = () => {
-  for (const enemy of enemies.returnEnemies()) {
+  for (const enemy of enemies.enemies) {
     if (enemy.x < 0 + 150 && enemy.x > 0 + 150 - speed) {
       points += gain;
       money += gain;
       localStorage.setItem("money", money);
       updatePoints();
+
+      document.querySelector("header span").style.opacity = 0;
+      setTimeout(() => {
+        document.querySelector("header span").removeAttribute("style");
+      }, 250);
     }
   }
 }
 
 //Sara
 const lost = () => {
-  const plane = planeObj.returnPlane();
-  ctx.drawImage(explosion, plane.x + plane.width / 2, plane.y - plane.height / 2, 100, 100);
+  const plane = planeObj.plane;
+  ctx.drawImage(explosion, plane.x + plane.width * .5, plane.y - plane.height * .5, 100, 100);
   document.querySelector('.lost').style.display = 'flex';
 }
 

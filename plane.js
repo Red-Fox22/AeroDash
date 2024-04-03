@@ -6,32 +6,30 @@ class Plane {
       width: 175,
       height: this.height,
       x: 150,
-      y: centerY_canvas - this.height / 2,
-      targetY: centerY_canvas - this.height / 2,
+      y: centerY_canvas - this.height * .5,
+      targetY: centerY_canvas - this.height * .5,
       angle: 0,
       maxAngle: 3,
       angleSpeed: .5,
     };
   }
 
-  returnPlane() {
-    return this.plane;
-  }
-
   draw() {
     ctx.save();
-    ctx.translate(this.plane.x + this.plane.width / 2, this.plane.y + this.plane.height / 2);
+    ctx.translate(this.plane.x + this.plane.width * .5, this.plane.y + this.plane.height * .5);
     ctx.rotate((this.plane.angle * Math.PI) / 180);
-    ctx.drawImage(planeImage, -this.plane.width / 2, -this.plane.height / 2, this.plane.width, this.plane.height);
+    ctx.drawImage(planeImage, -this.plane.width * .5, -this.plane.height * .5, this.plane.width, this.plane.height);
     ctx.restore();
   }
 
   updatePosition() {
+    const moveY = Math.abs(this.plane.targetY - this.plane.y) * .15;
+
     if (this.plane.targetY > this.plane.y + this.speed) {
-      this.plane.y += Math.ceil((this.plane.targetY % this.plane.y) / 5);
+      this.plane.y += moveY;
       this.updateAngle(this.plane.angleSpeed);
     } else if (this.plane.targetY < this.plane.y - this.speed) {
-      this.plane.y -= Math.ceil((this.plane.y % this.plane.targetY) / 5);
+      this.plane.y -= moveY;
       this.updateAngle(-this.plane.angleSpeed);
     } else {
       this.returnInitialAngle();
@@ -94,9 +92,6 @@ class Collisions {
 
   update() {
     this.checkCollisions();
-    if (this.gameOver) {
-      return true;
-    }
-    return false;
+    return this.gameOver;
   }
 }
