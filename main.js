@@ -23,6 +23,12 @@ planeImage.src = localStorage.getItem("plane") || "./assets/ap-1.webp";
 const planeLevel = planeImage.src.split("-")[1].split(".")[0];
 const speed = 10 * (1 + planeLevel * .25);
 
+const collision_sound = new Audio('./assets/collision.wav');
+collision_sound.volume = 1;
+
+const point_sound = new Audio('./assets/point.ogg');
+point_sound.volume = 0.1;
+
 const gain = 500;
 let points = 0;
 let money = Number(localStorage.getItem("money") || 0);
@@ -32,6 +38,8 @@ const updatePoints = () => {
     <span>${points.toString().padStart(5, '0')}</span>
     <img src="./assets/screen.webp" />
   `;
+
+  point_sound.play();
 }
 //Guilherme
 updatePoints();
@@ -62,6 +70,7 @@ const lost = () => {
   const plane = planeObj.plane;
   ctx.drawImage(explosion, plane.x + plane.width * .5, plane.y - plane.height * .5, 100, 100);
   document.querySelector('.lost').style.display = 'flex';
+  collision_sound.play();
 }
 
 //Miguel

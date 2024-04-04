@@ -1,4 +1,17 @@
 //Miguel
+const music_sound = new Audio('./assets/music.mp3');
+music_sound.loop = true;
+music_sound.volume = 0.2;
+
+let music = false;
+
+window.addEventListener("mousemove", () => {
+  if (!music) {
+    music_sound.play();
+    music = true;
+  }
+});
+
 document.querySelector('.play-btn')?.addEventListener("click", () => {
   location.href = 'game.html';
 });
